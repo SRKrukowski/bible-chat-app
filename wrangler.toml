@@ -1,0 +1,33 @@
+/**
+ * Cloudflare Wrangler Configuration
+ * 
+ * This file configures the Cloudflare Workers deployment
+ * including cron triggers for scheduled jobs.
+ */
+
+name = "bible-chat-app"
+main = "src/index.js"
+compatibility_date = "2023-12-01"
+
+# Configure Cloudflare D1 database
+[[d1_databases]]
+binding = "DB"
+database_name = "bible_chat_db"
+database_id = "bible-chat-db"
+
+# Configure Cron Triggers for scheduled jobs
+[triggers]
+crons = ["0 0 * * *"] # Run daily at midnight UTC
+
+# Configure environment variables
+[vars]
+JWT_SECRET = "replace-with-secure-secret-in-production"
+
+# Configure routes
+[routes]
+pattern = "*/*"
+script = "src/index.js"
+
+# Configure build settings
+[build]
+command = "npm run build"
